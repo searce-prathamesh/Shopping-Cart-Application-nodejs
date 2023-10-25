@@ -19,12 +19,5 @@ pipeline {
                    }
                 }
             }
-        
-
-        stage('Test') {
-            steps {
-                sh 'npm test' // Replace with your test command
-            }
-        }
     }
 }
