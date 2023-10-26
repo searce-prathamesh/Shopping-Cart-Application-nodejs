@@ -1,26 +1,33 @@
 pipeline {
-  agent any // Use any available Jenkins agent
-  
-  environment {
-    NODE_ENV = 'production' // Set the desired environment if needed
-  }
-  stages {
-    stage('git Checkout') {
-      steps {
-        checkout scm
-      }
-    }
-    stage('build') {
-      steps {
-        script {
-          def npmCacheDir = "${HOME}/.npm-cache"
-          sh "mkdir -p ${npmCacheDir}"
-          sh "npm config set cache ${npmCacheDir}"
-          sh 'npm install'
-        }
-      }
-    }
-    
-    }
-  }
+    agent any // Use any available Jenkins agent
 
+    environment {
+        NODE_ENV = 'production' // Set the desired environment if needed
+    }
+
+    stages {
+        stage('git Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    sh 'npm install -g pnpm'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                tag "v1.1.0"
+            }
+            steps {
+                echo 'Deploying only because this commit is tagged...'
+                sh 'npm test'
+            }
+        }
+    }
+}
