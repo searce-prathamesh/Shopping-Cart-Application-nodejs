@@ -3,7 +3,7 @@ on : [push]
 
 jobs:
   run-sample-code:
-    runs-on: ubuntu
+    runs-on: ubuntu-latest
     steps:
       - name: sample string 
         run: echo "Hello world"
