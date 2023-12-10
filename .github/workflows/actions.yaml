@@ -7,3 +7,20 @@ jobs:
     steps:
       - name: sample string 
         run: echo "Hello world"
+
+  parallel-job:
+    runs-on: macos-latest
+    steps:
+      - name: check npm and node version
+        run: |
+          node -v
+          npm -v
+  
+  dependent-job:
+    runs-on: windows-latest
+    needs: run-sample-code
+    steps:
+      - name: echo string
+        run: write-output "windows string"
+
+
